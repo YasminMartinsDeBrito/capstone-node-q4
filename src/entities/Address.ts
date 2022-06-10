@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinColumn,
+  OneToOne,
+} from "typeorm";
+import { User } from "./User";
 
-@Entity("adresses")
-export class Adress {
+@Entity("addresses")
+export class Address {
   @PrimaryGeneratedColumn("uuid")
   adressId?: string;
 
@@ -19,4 +26,8 @@ export class Adress {
 
   @Column({ nullable: false })
   zipcode: number;
+
+  @OneToOne(() => User, (user) => user.address, { nullable: true })
+  @JoinColumn()
+  user: User;
 }

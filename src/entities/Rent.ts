@@ -1,4 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from "typeorm";
+import { Car } from "./Car";
+import { Rating } from "./Rating";
+import { User } from "./User";
 
 @Entity("rents")
 export class Rent {
@@ -16,4 +26,16 @@ export class Rent {
 
   @Column({ default: false })
   completed: boolean;
+
+  @ManyToOne(() => User, (user) => user.rent)
+  user: User;
+
+  @ManyToOne(() => Car, (car) => car.rent)
+  car: Car;
+
+  @OneToMany(() => Rating, (rating) => rating.rent)
+  rating: Rating;
+
+  @OneToOne(() => Rating, (rating) => rating.owner)
+  rating: Rating;
 }

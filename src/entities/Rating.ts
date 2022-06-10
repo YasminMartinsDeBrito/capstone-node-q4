@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToOne,
+} from "typeorm";
+import { Rent } from "./Rent";
 
 @Entity("ratings")
 export class Rating {
@@ -10,4 +17,15 @@ export class Rating {
 
   @Column()
   comment: string;
+
+  @ManyToOne(() => Rent, (rent) => rent.rating)
+  rent: Rent;
+
+  @OneToOne(
+    () => Rent,
+    (rent) => {
+      rent.owner;
+    }
+  )
+  rent: Rent;
 }

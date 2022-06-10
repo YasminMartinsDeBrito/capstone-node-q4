@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
+} from "typeorm";
+import { Address } from "./Address";
+import { Car } from "./Car";
+import { Rent } from "./Rent";
 
 @Entity("users")
 export class User {
@@ -22,4 +31,13 @@ export class User {
 
   @Column()
   licenseCategory: string;
+
+  @OneToOne(() => Address, (address) => address.user, { lazy: true })
+  address: Address;
+
+  @OneToMany(() => Car, (car) => car.user)
+  car: Car;
+
+  @OneToMany(() => Rent, (rent) => rent.user)
+  rent: Rent;
 }

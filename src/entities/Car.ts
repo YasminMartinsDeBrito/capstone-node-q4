@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Rent } from "./Rent";
+import { User } from "./User";
 
 @Entity("cars")
 export class Car {
@@ -31,4 +33,10 @@ export class Car {
 
   @Column({ default: true })
   available: boolean;
+
+  @ManyToOne(() => User, (user) => user.car)
+  user: User;
+
+  @ManyToOne(() => Rent, (rent) => rent.car)
+  rent: Rent;
 }
