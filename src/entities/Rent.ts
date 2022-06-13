@@ -4,7 +4,6 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  OneToOne,
 } from "typeorm";
 import { Car } from "./Car";
 import { Rating } from "./Rating";
@@ -34,8 +33,5 @@ export class Rent {
   car: Car;
 
   @OneToMany(() => Rating, (rating) => rating.rent)
-  rating: Rating;
-
-  @OneToOne(() => Rating, (rating) => rating.owner)
   rating: Rating;
 }

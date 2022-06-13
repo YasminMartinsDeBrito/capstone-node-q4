@@ -6,6 +6,7 @@ import {
   OneToOne,
 } from "typeorm";
 import { Rent } from "./Rent";
+import { User } from "./User";
 
 @Entity("ratings")
 export class Rating {
@@ -18,14 +19,12 @@ export class Rating {
   @Column()
   comment: string;
 
+  @Column()
+  evaluator: string;
+
   @ManyToOne(() => Rent, (rent) => rent.rating)
   rent: Rent;
 
-  @OneToOne(
-    () => Rent,
-    (rent) => {
-      rent.owner;
-    }
-  )
-  rent: Rent;
+  @ManyToOne(() => User, (user) => user.rating)
+  user: User;
 }

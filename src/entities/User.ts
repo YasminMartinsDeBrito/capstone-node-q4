@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { Address } from "./Address";
 import { Car } from "./Car";
+import { Rating } from "./Rating";
 import { Rent } from "./Rent";
 
 @Entity("users")
@@ -40,4 +41,7 @@ export class User {
 
   @OneToMany(() => Rent, (rent) => rent.user)
   rent: Rent;
+
+  @OneToMany(() => Rating, (rating) => rating.user)
+  rating: Rating;
 }
