@@ -1,3 +1,4 @@
+import { Car } from "../entities/Car";
 import { User } from "../entities/User";
 
 declare global {
@@ -6,6 +7,9 @@ declare global {
             validated: User;
             decoded: User;
             user: User;
+            car: Car;
+            validatedCar: Car;
+            decodedCar: Car;
         }
     }
 }

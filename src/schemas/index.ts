@@ -4,4 +4,6 @@ import {
     loginUserSchema,
 } from "./user";
 
-export { createUserSchema, serializedCreateUserSchema, loginUserSchema };
+import { getAllCarsSchema} from "./car"
+
+export { createUserSchema, serializedCreateUserSchema, loginUserSchema, getAllCarsSchema };
