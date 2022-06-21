@@ -17,10 +17,9 @@ class CarRepo implements ICarRepo {
   constructor() {
     this.repo = AppDataSource.getRepository(Car);
   };
+  save = async (cars: Partial<Car>): Promise<Car>=> await this.repo.save(cars)
 
-  save = async (cars: Car): Promise<Car> => await this.repo.save(cars);
-
-  all = async () => await this.repo.find();
+  all = async () => await this.repo.find()
 
 
   findOne = async (payload: object) => await this.repo.findOneBy({ ...payload });

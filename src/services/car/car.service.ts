@@ -12,13 +12,14 @@ interface ICar {
 class CarService {
   createCar = async ({ validatedCar }: Request): Promise<AssertsShape<any>> => {
     const createCars = await carRepository.save(validatedCar)
-    return await serializedCreateCarSchema.validate(createCars, {stripUnknown:true})
+    return serializedCreateCarSchema.validate(createCars, {stripUnknown:true})
   };
 
   getAll = async (): Promise<Partial<Car>[]> => {
     const cars = await carRepository.all()
+    const carsFilter = cars.filter((car) =>car.available == true)
    
-    return getAllCarsSchema.validate(cars, {
+    return getAllCarsSchema.validate(carsFilter, {
       stripUnknown: true
     })
   };

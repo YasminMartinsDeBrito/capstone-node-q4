@@ -9,11 +9,9 @@ class CarController {
 
     getAll = async (req: Request, res: Response) => {
         const cars = await carService.getAll()
-        // if(req.car.available === true){
-        //     return cars
-        // }
-        // const carsAvailable = cars.find(car => car.available == true)
-        return res.status(201).json({cars: cars })
+        
+        // const carsAvailable = cars.find(car => car.available != false)
+        return res.status(201).json({cars: cars})
     }
 
     getCarById = async (req: Request, res: Response) => {

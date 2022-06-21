@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { AnySchema } from "yup";
+import { Car } from "../entities/Car";
 import { ErrorHandler } from "../errors";
 
 const validateSchemaCar =
     (shape: AnySchema) =>
     async (req: Request, res: Response, next: NextFunction) => {
+        
         try {
             const validatedCar = await shape.validate(req.body, {
                 abortEarly: false,
@@ -12,6 +14,7 @@ const validateSchemaCar =
             });
 
             req.validatedCar = validatedCar;
+
 
             return next();
         } catch (error) {
