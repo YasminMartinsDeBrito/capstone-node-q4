@@ -4,12 +4,10 @@ import { User } from "../entities/User";
 declare global {
     namespace Express {
         interface Request {
-            validated: User;
-            decoded: User;
+            validated: User | Car
+            decoded: User 
             user: User;
             car: Car;
-            validatedCar: Car;
-            decodedCar: Car;
         }
     }
 }

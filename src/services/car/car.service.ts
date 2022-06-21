@@ -10,15 +10,14 @@ interface ICar {
 }
 
 class CarService {
-  createCar = async ({ validatedCar }: Request): Promise<AssertsShape<any>> => {
-    const createCars = await carRepository.save(validatedCar)
+  createCar = async ({ validated }: Request): Promise<AssertsShape<any>> => {
+    const createCars = await carRepository.save((validated as Car))
     return serializedCreateCarSchema.validate(createCars, {stripUnknown:true})
   };
 
   getAll = async (): Promise<Partial<Car>[]> => {
     const cars = await carRepository.all()
     const carsFilter = cars.filter((car) =>car.available == true)
-   
     return getAllCarsSchema.validate(carsFilter, {
       stripUnknown: true
     })
@@ -33,9 +32,7 @@ class CarService {
   };
 
   updateCar = async ({car, body}: Request):Promise<Partial<Car>> => {
-   await carRepository.update(car .carId,{...body})
-   console.log("body:",body)
-   console.log("decoded:",car )
+   await carRepository.update(car.carId,{...body})
     return serializedCreateCarSchema.validate(
       {...car , ...body},
       {stripUnknown:true}

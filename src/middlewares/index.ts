@@ -4,7 +4,7 @@ import validateToken from "./validateToken.middleware";
 import getUserByIdOr404 from "./getUserByIdOr404.middleware";
 import userPermission from "./userPermission.middleware";
 import getCarByIdOr404 from "./getCarByIdOr404.middleware.ts";
-import validateSchemaCar from "./validateSchemaCar.moddleware";
+import verifyCarExists from "./validateCarExiste.middleware";
 
 export {
     validateSchema,
@@ -13,5 +13,5 @@ export {
     getUserByIdOr404,
     userPermission,
     getCarByIdOr404,
-    validateSchemaCar,
+    verifyCarExists
 };

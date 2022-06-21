@@ -3,7 +3,9 @@ import { carController } from "../controllers/car";
 import {
   validateToken,
   getCarByIdOr404,
-  validateSchemaCar,
+  userPermission,
+  verifyCarExists,
+  validateSchema,
 } from "../middlewares";
 import { createCarSchema } from "../schemas/car";
 
@@ -12,7 +14,8 @@ const carRouter = Router();
 carRouter.post(
   "/register",
   validateToken,
-  validateSchemaCar(createCarSchema),
+  validateSchema(createCarSchema),
+  // verifyCarExists,
   carController.createCar
 );
 carRouter.get(
@@ -31,6 +34,7 @@ carRouter.get(
 carRouter.patch(
   "/:carId",
   validateToken,
+  userPermission,
   getCarByIdOr404,
   carController.updateCar
 );

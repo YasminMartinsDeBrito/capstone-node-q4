@@ -9,8 +9,6 @@ class CarController {
 
     getAll = async (req: Request, res: Response) => {
         const cars = await carService.getAll()
-        
-        // const carsAvailable = cars.find(car => car.available != false)
         return res.status(201).json({cars: cars})
     }
 

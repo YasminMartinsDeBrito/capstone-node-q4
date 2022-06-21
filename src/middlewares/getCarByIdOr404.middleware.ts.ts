@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { Car } from "../entities/Car";
 import { ErrorHandler } from "../errors";
 import { carRepository } from "../repositories";
 
@@ -9,11 +10,9 @@ const getCarByIdOr404 = async (
 ) => {
     const { carId } = req.params;
 
-    console.log(carId);
-
+  
     const car = await carRepository.findOne({ carId });
 
-    console.log(car);
 
     if (!car) {
         throw new ErrorHandler(404, "Car not found.");
