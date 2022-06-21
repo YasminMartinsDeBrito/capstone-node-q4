@@ -1,4 +1,4 @@
-import { Request, response, Response} from 'express'
+import { Request, Response} from 'express'
 import { carService } from '../../services/car'
 
 class CarController {
@@ -7,10 +7,14 @@ class CarController {
         return res.status(201).json(car)
     }
 
-    // getAll = async (req: Request, res: Request) => {
-    //     const cars = await carService.getAll()
-    //     return res.status(200).json({cars: cars});
-    // }
+    getAll = async (req: Request, res: Response) => {
+        const cars = await carService.getAll()
+        // if(req.car.available === true){
+        //     return cars
+        // }
+        // const carsAvailable = cars.find(car => car.available == true)
+        return res.status(201).json({cars: cars })
+    }
 
     getCarById = async (req: Request, res: Response) => {
         const car = await carService.getCarById(req)

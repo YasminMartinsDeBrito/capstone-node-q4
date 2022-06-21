@@ -1,8 +1,8 @@
 import { Request } from "express";
+import { AssertsShape } from "yup/lib/object";
 import { Car } from "../../entities/Car";
 import { carRepository } from "../../repositories";
-// import { getAllCarsSchema } from "../../schemas";
-import { serializedCreateCarSchema } from "../../schemas/car";
+import { getAllCarsSchema, serializedCreateCarSchema } from "../../schemas/car";
 
 interface ICar {
   status: number;
@@ -10,18 +10,18 @@ interface ICar {
 }
 
 class CarService {
-  createCar = async ({validatedCar}: Request) => {
+  createCar = async ({ validatedCar }: Request): Promise<AssertsShape<any>> => {
     const createCars = await carRepository.save(validatedCar)
-
-    return await serializedCreateCarSchema.validate(createCars)
+    return await serializedCreateCarSchema.validate(createCars, {stripUnknown:true})
   };
 
-  // getAll = async (): Promise<Partial<Car>[]> => {
-  //   const cars = await carRepository.all()
-  //   return getAllCarsSchema.validate(cars, {
-  //     stripUnknown: true
-  //   })
-  // };
+  getAll = async (): Promise<Partial<Car>[]> => {
+    const cars = await carRepository.all()
+   
+    return getAllCarsSchema.validate(cars, {
+      stripUnknown: true
+    })
+  };
 
   getCarById = async ({car}: Request): Promise<Partial<Car>> => {
     const carFind = await carRepository.findOne({carId: car.carId})
@@ -31,11 +31,12 @@ class CarService {
     })
   };
 
-  updateCar = async ({decodedCar, body}: Request):Promise<Partial<Car>> => {
-   await carRepository.update(decodedCar.carId,{...body})
-
+  updateCar = async ({car, body}: Request):Promise<Partial<Car>> => {
+   await carRepository.update(car .carId,{...body})
+   console.log("body:",body)
+   console.log("decoded:",car )
     return serializedCreateCarSchema.validate(
-      {...decodedCar, ...body},
+      {...car , ...body},
       {stripUnknown:true}
     )
   };

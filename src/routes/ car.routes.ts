@@ -3,8 +3,8 @@ import { carController } from "../controllers/car";
 import {
   validateToken,
   getCarByIdOr404,
+  validateSchemaCar,
 } from "../middlewares";
-import validateSchemaCar from "../middlewares/validateSchemaCar.moddleware";
 import { createCarSchema } from "../schemas/car";
 
 const carRouter = Router();
@@ -12,11 +12,22 @@ const carRouter = Router();
 carRouter.post(
   "/register",
   validateToken,
-  // validateSchemaCar(createCarSchema),
+  validateSchemaCar(createCarSchema),
   carController.createCar
 );
-// carRouter.get("", validateToken, carController.getAll);
-carRouter.get("/:carId", getCarByIdOr404, carController.getCarById);
+carRouter.get(
+  "",
+  validateToken,
+  carController.getAll
+);
+
+carRouter.get(
+  "/:carId",
+  validateToken,
+  getCarByIdOr404,
+  carController.getCarById
+);
+
 carRouter.patch(
   "/:carId",
   validateToken,
