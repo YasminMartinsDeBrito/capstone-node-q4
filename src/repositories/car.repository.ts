@@ -8,33 +8,31 @@ interface ICarRepo {
   findOne: (payload: object) => Promise<Car>;
   update: (id: string, payload: Partial<Car>) => Promise<UpdateResult>;
   delete: (id: string) => Promise<DeleteResult>;
+  
 };
 
 class CarRepo implements ICarRepo {
-  private ormRepo: Repository<Car>;
+  repo: Repository<Car>;
 
   constructor() {
-    this.ormRepo = AppDataSource.getRepository(Car);
+    this.repo = AppDataSource.getRepository(Car);
   };
 
-  save = async (car: Partial<Car>) => {
-    return await this.ormRepo.save(car);
-  };
+  save = async (cars: Partial<Car>) => await this.repo.save(cars);
 
-  all = async () => {
-    return await this.ormRepo.find();
-  };
+  all = async () => await this.repo.find();
+
 
   findOne = async (payload: object) => {
-    return await this.ormRepo.findOneBy({ ...payload });
+    return await this.repo.findOneBy({ ...payload });
   };
 
   update = async (carId:string, payload: Partial<Car>) => {
-    return await this.ormRepo.update(carId,{...payload});
+    return await this.repo.update(carId,{...payload});
   };
 
   delete = async (id: string) => {
-    return await this.ormRepo.delete(id)
+    return await this.repo.delete(id)
   }
 
 }

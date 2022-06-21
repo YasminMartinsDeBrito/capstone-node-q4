@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { Car } from "../../entities/Car";
 import { carRepository } from "../../repositories";
-import { getAllCarsSchema } from "../../schemas";
+// import { getAllCarsSchema } from "../../schemas";
 import { serializedCreateCarSchema } from "../../schemas/car";
 
 interface ICar {
