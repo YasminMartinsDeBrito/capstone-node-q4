@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm"
 
-export class licenseCategoryNullable1655148893422 implements MigrationInterface {
+export class initialComit1655853619491 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
     }

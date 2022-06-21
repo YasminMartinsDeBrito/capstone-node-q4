@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  JoinColumn
 } from "typeorm";
 import { Car } from "./Car";
 import { Rating } from "./Rating";
@@ -26,12 +27,14 @@ export class Rent {
   @Column({ default: false })
   completed: boolean;
 
-  @ManyToOne(() => User, (user) => user.rent)
+  @ManyToOne(() => User, (user) => user.rent, {eager: true})
+  @JoinColumn()
   user: User;
 
-  @ManyToOne(() => Car, (car) => car.rent)
+  @ManyToOne(() => Car, (car) => car.rent, {eager: true})
+  @JoinColumn()
   car: Car;
 
-  @OneToMany(() => Rating, (rating) => rating.rent)
+  @OneToMany(() => Rating, (rating) => rating.rent, {eager: true})
   rating: Rating;
 }

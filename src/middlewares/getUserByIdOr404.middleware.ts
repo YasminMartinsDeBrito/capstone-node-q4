@@ -9,11 +9,9 @@ const getUserByIdOr404 = async (
 ) => {
     const { userId } = req.params;
 
-    console.log(userId);
 
     const user = await userRepository.findOne({ userId });
 
-    console.log(user);
 
     if (!user) {
         throw new ErrorHandler(404, "User not found.");
