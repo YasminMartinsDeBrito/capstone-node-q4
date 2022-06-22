@@ -1,7 +1,20 @@
 import {
-    createUserSchema,
-    serializedCreateUserSchema,
-    loginUserSchema,
+  createUserSchema,
+  serializedCreateUserSchema,
+  loginUserSchema,
 } from "./user";
 
-export { createUserSchema, serializedCreateUserSchema, loginUserSchema };
+import {
+  createRatingSchema,
+  serializedCreateRatingSchema,
+  getAllRatingsSchema,
+} from "./rating";
+
+export {
+  createUserSchema,
+  serializedCreateUserSchema,
+  loginUserSchema,
+  createRatingSchema,
+  serializedCreateRatingSchema,
+  getAllRatingsSchema,
+};
