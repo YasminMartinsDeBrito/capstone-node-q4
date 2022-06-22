@@ -10,6 +10,8 @@ import {
   getAllRatingsSchema,
 } from "./rating";
 
+import { getAllCarsSchema} from "./car"
+
 export {
   createUserSchema,
   serializedCreateUserSchema,
@@ -17,4 +19,7 @@ export {
   createRatingSchema,
   serializedCreateRatingSchema,
   getAllRatingsSchema,
+  getAllCarsSchema
 };
+
+

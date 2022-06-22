@@ -18,37 +18,37 @@ interface ILogin {
 }
 
 class userService {
-  loginUser = async ({ validated }: Request): Promise<ILogin> => {
-    const user: User = await userRepository.findOne({
-      email: (validated as User).email,
-    });
+    loginUser = async ({ validated }: Request): Promise<ILogin> => {
+        const user: User = await userRepository.findOne({
+            email: (validated as User).email,
+        });
 
-    if (!user) {
-      return {
-        status: 401,
-        message: { message: "Invalid credentials" },
-      };
-    }
+        if (!user) {
+            return {
+                status: 401,
+                message: { message: "Invalid credentials" },
+            };
+        }
 
-    if (!(await user.comparePwd((validated as User).password))) {
-      return {
-        status: 401,
-        message: { message: "Invalid credentials" },
-      };
-    }
+        if (!(await user.comparePwd((validated as User).password))) {
+            return {
+                status: 401,
+                message: { message: "Invalid credentials" },
+            };
+        }
 
-    const token: string = sign({ ...user }, process.env.SECRET_KEY, {
-      expiresIn: process.env.EXPIRES_IN,
-    });
+        const token: string = sign({ ...user }, process.env.SECRET_KEY, {
+            expiresIn: process.env.EXPIRES_IN,
+        });
 
-    return {
-      status: 200,
-      message: { token },
+        return {
+            status: 200,
+            message: { token },
+        };
     };
-  };
 
-  createUser = async ({ validated }: Request): Promise<AssertsShape<any>> => {
-    (validated as User).password = await hash((validated as User).password, 10);
+    createUser = async ({ validated }: Request): Promise<AssertsShape<any>> => {
+        (validated as User).password = await hash((validated as User).password, 10);
 
     const user: User = await userRepository.save(validated as User);
 

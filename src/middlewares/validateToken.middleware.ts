@@ -6,7 +6,7 @@ import { User } from "../entities/User";
 dotenv.config();
 
 const validateToken = async (req: Request, _: Response, next: NextFunction) => {
-    const token: string = req.headers.authorization?.split(" ")[1];
+    const token: string = req.headers.authorization?.split(" ")[1]
 
     if (!token) {
         throw new ErrorHandler(400, "Missing authorization token.");
