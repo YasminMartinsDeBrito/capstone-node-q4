@@ -73,8 +73,8 @@ class userService {
     });
   };
 
-  updateUser = async ({ decoded, body }: Request): Promise<Partial<User>> => {
-    await userRepository.update(decoded.userId, { ...body });
+    updateUser = async ({ decoded, body }: Request): Promise<Partial<User>> => {
+        await userRepository.update((decoded as User).userId, { ...body });
 
     return serializedCreateUserSchema.validate(
       { ...decoded, ...body },

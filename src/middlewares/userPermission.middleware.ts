@@ -1,6 +1,7 @@
 import { userRepository } from "../repositories";
 import { Request, Response, NextFunction } from "express";
 import { ErrorHandler } from "../errors";
+import { User } from "../entities/User";
 
 const userPermission = async (
     req: Request,
@@ -8,7 +9,7 @@ const userPermission = async (
     next: NextFunction
 ) => {
     const decodedUser = await userRepository.findOne({
-        userId: req.decoded.userId,
+        userId: (req.decoded as User).userId,
     });
     const paramsUser = req.user;
 

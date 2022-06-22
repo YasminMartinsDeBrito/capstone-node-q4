@@ -15,6 +15,7 @@ const serializedCreateUserSchema = yup.object().shape({
     email: yup.string().email().required(),
     license: yup.boolean().required(),
     licenseCategory: yup.string().required(),
+   
 });
 
 export { createUserSchema, serializedCreateUserSchema };
