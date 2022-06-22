@@ -6,15 +6,15 @@ import * as dotenv from "dotenv";
 import { AssertsShape } from "yup/lib/object";
 import { hash } from "bcrypt";
 import {
-    getAllUsersSchema,
-    serializedCreateUserSchema,
+  getAllUsersSchema,
+  serializedCreateUserSchema,
 } from "../../schemas/user";
 
 dotenv.config();
 
 interface ILogin {
-    status: number;
-    message: object;
+  status: number;
+  message: object;
 }
 
 class userService {
@@ -50,48 +50,48 @@ class userService {
     createUser = async ({ validated }: Request): Promise<AssertsShape<any>> => {
         (validated as User).password = await hash((validated as User).password, 10);
 
-        const user: User = await userRepository.save(validated);
+    const user: User = await userRepository.save(validated as User);
 
-        return await serializedCreateUserSchema.validate(user, {
-            stripUnknown: true,
-        });
-    };
+    return await serializedCreateUserSchema.validate(user, {
+      stripUnknown: true,
+    });
+  };
 
-    getUserById = async ({ user }: Request): Promise<Partial<User>> => {
-        const userFind = await userRepository.findOne({ userId: user.userId });
+  getUserById = async ({ user }: Request): Promise<Partial<User>> => {
+    const userFind = await userRepository.findOne({ userId: user.userId });
 
-        return serializedCreateUserSchema.validate(userFind, {
-            stripUnknown: true,
-        });
-    };
+    return serializedCreateUserSchema.validate(userFind, {
+      stripUnknown: true,
+    });
+  };
 
-    getAll = async (): Promise<Partial<User>[]> => {
-        const users = await userRepository.all();
+  getAll = async (): Promise<Partial<User>[]> => {
+    const users = await userRepository.all();
 
-        return getAllUsersSchema.validate(users, {
-            stripUnknown: true,
-        });
-    };
+    return getAllUsersSchema.validate(users, {
+      stripUnknown: true,
+    });
+  };
 
     updateUser = async ({ decoded, body }: Request): Promise<Partial<User>> => {
         await userRepository.update((decoded as User).userId, { ...body });
 
-        return serializedCreateUserSchema.validate(
-            { ...decoded, ...body },
-            {
-                stripUnknown: true,
-            }
-        );
-    };
+    return serializedCreateUserSchema.validate(
+      { ...decoded, ...body },
+      {
+        stripUnknown: true,
+      }
+    );
+  };
 
-    deleteUser = async ({ user }: Request): Promise<ILogin> => {
-        await userRepository.delete(user.userId);
+  deleteUser = async ({ user }: Request): Promise<ILogin> => {
+    await userRepository.delete(user.userId);
 
-        return {
-            status: 200,
-            message: { message: "User has been deleted" },
-        };
+    return {
+      status: 200,
+      message: { message: "User has been deleted" },
     };
+  };
 }
 
 export default new userService();

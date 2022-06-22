@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import rentServices from "../../services/rent/rent.services";
 class RentController {
     createRent = async (req:Request, res: Response) => {
-        const body = req.body
-        const rent = await rentServices.createRent(body, req)
+        const rent = await rentServices.createRent( 
+            req,
+            req.headers.authorization.split(" ")[1]
+        )
 
         return res.status(rent.status).json({message:rent.message})
     }
@@ -39,7 +41,7 @@ class RentController {
             req.params, 
             req.headers.authorization.split(" ")[1])
 
-        return res.status(complete.status).json(complete.message)
+        return res.status(complete.status).json({message:complete.message})
     }
 
     updateRent = async (req:Request, res:Response) => {
@@ -48,7 +50,7 @@ class RentController {
             req.params,
             req.headers.authorization.split(" ")[1]
         )
-        return res.status(200).json(upedate)
+        return res.status(upedate.status).json({message:upedate.message})
     }
 }
 

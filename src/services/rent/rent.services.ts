@@ -17,10 +17,12 @@ interface IError {
 }
 
 class RentService {
-    createRent = async (body, {validated}:Request): Promise<IError> => {
+    createRent = async ({validated, body}:Request, token ): Promise<IError> => {
         
+        const user1 = serializedCreateUserSchema.validate(Jwt.decode(token)) 
+    
         const user: User = await userRepository.findOne({
-            userId: body.userId
+          userId: (await user1).userId
         })
         if (!user){
             return {
@@ -96,10 +98,10 @@ class RentService {
         })
 
         const rent: Rent = await rentRepository.findOne({
-            rentId: params.userId
+            rentId: params.rentId
         }) 
 
-        if (user.userId != rent.car.carId){
+        if (user.userId !== rent.car.user.userId){
             return {
                 status:400,
                 message:"you are not allowed to access this route"
@@ -126,15 +128,25 @@ class RentService {
         })
         
         const rent: Rent = await rentRepository.findOne({
-            rentId: params.userId
+            rentId: params.rentId
         }) 
-        if (user.userId != rent.user.userId){
+
+        console.log(user)
+        console.log(rent)
+
+        if (user.userId !== rent.user.userId){
             return {
                 status:400,
                 message:"you are not allowed to access this route"
             }
         }
+
         await rentRepository.update(params.rentId, body)
+
+        return{
+            status:200,
+            message:body
+        }
 
     }
 
