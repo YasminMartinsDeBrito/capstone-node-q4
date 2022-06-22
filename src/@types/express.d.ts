@@ -1,15 +1,18 @@
 import { Car } from "../entities/Car";
-import { Rent } from "../entities/Rent";
+import { Rating } from "../entities/Rating";
 import { User } from "../entities/User";
+import { Rent } from "../entities/Rent";
+
 
 declare global {
-    namespace Express {
-        interface Request {
-            validated: User | Rent | Car;
-            decoded: User | Rent;
-            user: User;
-            car: Car;
-            rent: Rent;
-        }
+  namespace Express {
+    interface Request {
+      validated: User | Rating | Car | Rent;
+      decoded: User;
+      user: User;
+      rating: Rating;
+      rent: Rent;
+      car: Car
     }
+  }
 }

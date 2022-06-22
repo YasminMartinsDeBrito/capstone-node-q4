@@ -1,3 +1,5 @@
 import { userService } from "./user";
 
-export { userService };
+import { ratingService } from "./rating";
+
+export { userService, ratingService };
