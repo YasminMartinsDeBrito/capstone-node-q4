@@ -5,7 +5,7 @@ import { Rent } from "../entities/Rent";
 interface IRentRepo {
     save: (rent: Partial<Rent>) => Promise<Rent>;
     all: () => Promise<Rent[]>;
-    find: (payload: object) => Promise<Rent[]>;
+    findOne: (payload: object) => Promise<Rent>;
     update: (id: string, payload: Partial<Rent>) => Promise<UpdateResult>;
     delete: (id: string) => Promise<DeleteResult>;
 }
@@ -24,8 +24,8 @@ interface IRentRepo {
         return await this.ormRepo.find()
     } 
 
-    find = async (payload: object) => {
-        return await this.ormRepo.find({...payload})
+    findOne = async (payload: object) => {
+        return await this.ormRepo.findOneBy({...payload})
     }
 
     update = async (rentId: string, payload: Partial<Rent>) => {

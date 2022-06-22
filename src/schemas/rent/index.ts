@@ -1,4 +1,4 @@
-import {createRentSchema, } from "./createrent.schema";
-import { serealizedRentSchema } from "./getRent.schema";
+import {createRentSchema, serealizedRentCreateSchema} from "./createrent.schema";
+import { serealizedRentGetSchema } from "./getRent.schema";
 
-export {createRentSchema, serealizedRentSchema}
+export {createRentSchema, serealizedRentGetSchema,serealizedRentCreateSchema}

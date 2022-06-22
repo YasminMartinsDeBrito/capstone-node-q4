@@ -3,7 +3,7 @@ import { carService } from '../../services/car'
 
 class CarController {
     createCar = async(req: Request, res: Response) => {
-        const car = await carService.createCar(req)
+        const car = await carService.createCar(req, req.headers.authorization.split(" ")[1])
         return res.status(201).json(car)
     }
 

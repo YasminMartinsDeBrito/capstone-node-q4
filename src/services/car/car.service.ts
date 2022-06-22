@@ -1,7 +1,11 @@
 import { Request } from "express";
+import  Jwt, { JwtPayload }  from "jsonwebtoken";
+import { type } from "os";
 import { AssertsShape } from "yup/lib/object";
 import { Car } from "../../entities/Car";
-import { carRepository } from "../../repositories";
+import { User } from "../../entities/User";
+import { carRepository, userRepository } from "../../repositories";
+import { serializedCreateUserSchema } from "../../schemas";
 import { getAllCarsSchema, serializedCreateCarSchema } from "../../schemas/car";
 
 interface ICar {
@@ -10,9 +14,20 @@ interface ICar {
 }
 
 class CarService {
-  createCar = async ({ validated }: Request): Promise<AssertsShape<any>> => {
-    const createCars = await carRepository.save((validated as Car))
-    return serializedCreateCarSchema.validate(createCars, {stripUnknown:true})
+  createCar = async ({ validated }: Request, token)/*: Promise<AssertsShape<any>> */ => {
+
+    const user1 = serializedCreateUserSchema.validate(Jwt.decode(token)) 
+    
+    const user: User = await userRepository.findOne({
+      userId: (await user1).userId
+    })
+
+    const createCars = await carRepository.save({
+      ...(validated as Car),
+      user
+    })
+
+    return serializedCreateCarSchema.validate(createCars, {stripUnknown:true}) 
   };
 
   getAll = async (): Promise<Partial<Car>[]> => {
@@ -23,7 +38,7 @@ class CarService {
     })
   };
 
-  getCarById = async ({car}: Request): Promise<Partial<Car>> => {
+   getCarById = async ({car}: Request) => {
     const carFind = await carRepository.findOne({carId: car.carId})
 
     return serializedCreateCarSchema.validate(carFind,{
@@ -31,13 +46,15 @@ class CarService {
     })
   };
 
-  updateCar = async ({car, body}: Request):Promise<Partial<Car>> => {
+  updateCar = async ({car, body}: Request) => {
+
+    console.log(car.carId)
    await carRepository.update(car.carId,{...body})
     return serializedCreateCarSchema.validate(
       {...car , ...body},
       {stripUnknown:true}
     )
-  };
+  }; 
 
   deleteCar = async ({ car }: Request): Promise<ICar> => {
     await carRepository.delete(car.carId);

@@ -11,6 +11,13 @@ const serializedCreateCarSchema = yup.object().shape({
     mileage: yup.string().required(),
     dailyPrice: yup.number().required(),
     available: yup.boolean().required(),
+    user: yup.object().shape({
+        userId: yup.string().uuid().required(),
+        name: yup.string().required(),
+        email: yup.string().email().required(),
+        license: yup.boolean().required(),
+        licenseCategory: yup.string().required(),
+    }),
 })
 
 export { serializedCreateCarSchema}

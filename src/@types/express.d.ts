@@ -6,9 +6,10 @@ declare global {
     namespace Express {
         interface Request {
             validated: User | Rent | Car;
-            decoded: User ;
+            decoded: User | Rent;
             user: User;
             car: Car;
+            rent: Rent;
         }
     }
 }
