@@ -12,7 +12,6 @@ import {
 import { Rent } from "../../entities/Rent";
 import { validateSchema } from "../../middlewares";
 import { serealizedRentSchema } from "../../schemas/rent";
-import { de } from "date-fns";
 
 dotenv.config();
 
@@ -23,7 +22,6 @@ interface ILogin {
 
 class RentService {
     createRent = async ({validated, decoded}: Request) => {
-        console.log((validated as Rent).user)
         
         const user: User = await userRepository.findOne({
            userId: (validated as Rent).user
@@ -41,14 +39,15 @@ class RentService {
     }
 
     getForUser = async ({user}: Request) => {
-        console.log(user.userId)
 
         const rents = await rentRepository.all()
-
-        console.log(rents)
-
-       
-        return ""
+        const results = rents.filter((item) => {
+            return item.user.userId === user.userId
+        })
+        
+        return serealizedRentSchema.validate(results, {
+            stripUnknown: true,
+        }) 
     }
 }
 

@@ -12,7 +12,7 @@ class RentController {
 
         const rents = await rentServices.getForUser(req)
 
-        return response.status(200).json(rents)
+        return res.status(200).json(rents)
     }
 
 

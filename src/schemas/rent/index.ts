@@ -1,3 +1,4 @@
-import {createRentSchema, serealizedRentSchema} from "./createrent.schema";
+import {createRentSchema, } from "./createrent.schema";
+import { serealizedRentSchema } from "./getRent.schema";
 
 export {createRentSchema, serealizedRentSchema}
