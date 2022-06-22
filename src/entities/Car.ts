@@ -34,7 +34,7 @@ export class Car {
   @Column({ default: true })
   available: boolean;
 
-  @ManyToOne(() => User, (user) => user.car)
+  @ManyToOne(() => User, (user) => user.car, {eager: true})
   user: User;
 
   @ManyToOne(() => Rent, (rent) => rent.car)
