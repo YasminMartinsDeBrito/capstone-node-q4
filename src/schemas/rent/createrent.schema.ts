@@ -5,7 +5,6 @@ const createRentSchema = yup.object().shape({
     end_date: yup.date().default(Date.now.prototype).optional(),
     ownerConfirmation:yup.boolean().default(false),
     completed: yup.boolean().default(false).optional(),
-    userId: yup.string().required()
 })
 
 const serealizedRentCreateSchema = yup.object().shape({

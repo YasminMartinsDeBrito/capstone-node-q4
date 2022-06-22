@@ -12,6 +12,7 @@ declare global {
       user: User;
       rating: Rating;
       rent: Rent;
+      car: Car
     }
   }
 }
