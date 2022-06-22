@@ -20,7 +20,7 @@ interface ILogin {
 class userService {
     loginUser = async ({ validated }: Request): Promise<ILogin> => {
         const user: User = await userRepository.findOne({
-            email: validated.email,
+            email: (validated as User).email,
         });
 
         if (!user) {
@@ -30,7 +30,7 @@ class userService {
             };
         }
 
-        if (!(await user.comparePwd(validated.password))) {
+        if (!(await user.comparePwd((validated as User).password))) {
             return {
                 status: 401,
                 message: { message: "Invalid credentials" },
@@ -48,7 +48,7 @@ class userService {
     };
 
     createUser = async ({ validated }: Request): Promise<AssertsShape<any>> => {
-        validated.password = await hash(validated.password, 10);
+        (validated as User).password = await hash((validated as User).password, 10);
 
         const user: User = await userRepository.save(validated);
 
