@@ -50,7 +50,7 @@ class RentController {
             req.params,
             req.headers.authorization.split(" ")[1]
         )
-        return res.status(upedate.status).json({message:upedate.message})
+        return res.status(upedate.status).json(upedate.message)
     }
 }
 

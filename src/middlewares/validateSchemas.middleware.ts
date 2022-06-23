@@ -5,14 +5,14 @@ import { ErrorHandler } from "../errors";
 const validateSchema =
     (shape: AnySchema) =>
     async (req: Request, res: Response, next: NextFunction) => {
-        console.log(req)
+
         try {
-            console.log(req.body)
+    
             const validated = await shape.validate(req.body, {
                 abortEarly: false,
                 stripUnknown: true,
             });
-            console.log(validated)
+
             req.validated = validated;
 
             return next();

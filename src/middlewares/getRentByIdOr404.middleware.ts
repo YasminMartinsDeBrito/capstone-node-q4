@@ -9,8 +9,6 @@ const getRentByIdOr404 = async (
     next: NextFunction
 ) => {
     const { rentId } = req.params;
-
-    console.log(rentId)
   
     const rent = await rentRepository.findOne({ rentId });
 
