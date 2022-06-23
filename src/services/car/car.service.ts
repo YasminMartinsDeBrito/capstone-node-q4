@@ -48,7 +48,6 @@ class CarService {
 
   updateCar = async ({car, body}: Request) => {
 
-    console.log(car.carId)
    await carRepository.update(car.carId,{...body})
     return serializedCreateCarSchema.validate(
       {...car , ...body},

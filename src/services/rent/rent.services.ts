@@ -130,10 +130,6 @@ class RentService {
         const rent: Rent = await rentRepository.findOne({
             rentId: params.rentId
         }) 
-
-        console.log(user)
-        console.log(rent)
-
         if (user.userId !== rent.user.userId){
             return {
                 status:400,
@@ -147,7 +143,6 @@ class RentService {
             status:200,
             message:body
         }
-
     }
 
     updateRent = async ({body}:Request, params, token) => {
@@ -160,6 +155,7 @@ class RentService {
         const rent: Rent = await rentRepository.findOne({
             rentId: params.userId
         }) 
+
         if (user.userId != rent.user.userId){
             return {
                 status:400,
@@ -167,6 +163,10 @@ class RentService {
             }
         }
         await rentRepository.update(params.rentId, body)
+        return{
+            status:200,
+            message:await rentRepository.update(params.rentId, body)
+        }
     }
 }
 

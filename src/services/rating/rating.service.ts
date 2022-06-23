@@ -115,8 +115,6 @@ class ratingService {
                 message:"you are not allowed to access this route"
             }
         }
-        console.log(params)
-        console.log(body)
 
         await ratingRepository.update(params.ratingId, body)
 
